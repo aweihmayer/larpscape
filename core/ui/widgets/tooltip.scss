@@ -1,0 +1,29 @@
+.tooltip {
+    border: 1px solid black;
+    border-radius: 1em;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.65em;
+    font-weight: bold;
+    height: 1.2em;
+    position: relative;
+    text-align: center;
+    top: -0.1em;
+    width: 1.2em;
+
+    &:hover::after, &:focus::after {
+        content: attr(data-tip);
+        position: absolute;
+        background-color: #000;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        top: 100%;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.2s;
+        white-space: nowrap;
+        z-index: 1;
+        opacity: 1;
+    }
+}

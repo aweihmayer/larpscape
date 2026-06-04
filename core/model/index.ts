@@ -1,0 +1,1 @@
+export { CharModelField } from "./char_model_field";

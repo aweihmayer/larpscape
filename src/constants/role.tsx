@@ -1,0 +1,10 @@
+export enum Role {
+    GUEST = 0,
+    MEMBER = 10,
+    MEMBER_PLUS = 20,
+    REFEREE = 30,
+    MANAGER = 40,
+    ADMIN = 60,
+    SUPER_ADMIN = 80,
+    SYSTEM = 100
+}

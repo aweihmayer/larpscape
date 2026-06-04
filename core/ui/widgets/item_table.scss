@@ -1,0 +1,41 @@
+.item-table {
+    display: grid;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+
+    header {
+        display: grid;
+        background: #f8fafc;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+
+        div {
+            padding: 1em;
+            min-width: 0;
+        }
+    }
+
+    ul {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    li {
+        display: grid;
+        border-bottom: 1px solid #e5e7eb;
+
+        div {
+            display: flex;
+            align-items: center;
+            padding: 1em;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
