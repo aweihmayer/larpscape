@@ -13,6 +13,7 @@ app.add_exception_handler(exception_handler.BaseHttpException, exception_handler
 app.include_router(asset_controller.router)
 app.include_router(auth_controller.router)
 app.include_router(config_controller.router)
+app.include_router(user_controller.router)
 
 # Must be included last
 @app.get('/{full_path:path}', response_class=HTMLResponse)

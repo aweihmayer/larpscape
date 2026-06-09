@@ -1,13 +1,28 @@
-import { Role, Routes } from "@/src";
+import { App, Cookie } from "@/core";
+import { Role, Routes, UserDto } from "@/src";
 
 export class AuthService {
-    static user: object | null = null;
+    static user: UserDto = UserDto.fromJson({ role: Role.GUEST })
+    static accessTokenCookie = new Cookie('access_token_cookie')
+    static refreshTokenCookie = new Cookie('refresh_token_cookie')
 
     static signin(data: object) {
         return Routes.api.auth.signin.fetch(data).then(x => {
-            if (x.response.ok) AuthService.user = x.data;
-            return x;
+            if (x.response.ok) {
+                AuthService.user = UserDto.fromJson(x.data)
+                App.instance?.setState({})
+            }
+            return x
         });
+    }
+
+    static signout() {
+        Routes.api.auth.signout.fetch().then(x => {
+            if (x.response.ok) {
+                AuthService.user = UserDto.fromJson({ role: Role.GUEST })
+                App.instance?.setState({})
+            }
+        })
     }
 
     static refresh() {
@@ -16,9 +31,9 @@ export class AuthService {
 
     static ping() {
         return Routes.api.auth.ping.fetch().then(x => {
-            if (x.response.ok && x.data.role > Role.GUEST) AuthService.user = x.data;
-            else AuthService.user = null;
-            return x;
-        }); 
+            if (x.response.ok && x.data.role > Role.GUEST) AuthService.user = UserDto.fromJson(x.data)
+            else AuthService.user = UserDto.fromJson({ role: Role.GUEST })
+            return x
+        })
     }
 }

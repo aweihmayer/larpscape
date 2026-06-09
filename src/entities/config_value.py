@@ -3,6 +3,8 @@ import json
 from typing import Any
 # Module imports
 from .dependencies import *
+# Package imports
+from core import *
 
 class ConfigValue(BaseEntity):
     id: str = CharField(primary_key=True) # type: ignore
@@ -10,7 +12,7 @@ class ConfigValue(BaseEntity):
     initial_value: str = CharField() # type: ignore
     value: str = CharField(null=True) # type: ignore
     options: str | None = CharField(null=True) # type: ignore
-    is_secure: bool = BooleanField() # type: ignore
+    is_secret: bool = BooleanField() # type: ignore
     is_editable: bool = BooleanField() # type: ignore
 
     def set_value(self, value: Any):
@@ -49,7 +51,7 @@ class ConfigValue(BaseEntity):
         id: ConfigId,
         data_type: type,
         initial_value: Any,
-        secure: bool = False,
+        secret: bool = False,
         editable: bool = True,
         options: list | None = None
     ) -> 'ConfigValue':
@@ -58,7 +60,7 @@ class ConfigValue(BaseEntity):
         config.data_type = data_type.__name__
         config.initial_value = str(initial_value)
         config.value = config.initial_value
-        config.is_secure = secure
+        config.is_secret = secret
         config.is_editable = editable
         config.options = json.dumps(options) if options else None
         return config
@@ -91,7 +93,7 @@ class ConfigValue(BaseEntity):
                 ConfigId.RESEND_API_KEY,
                 str,
                 None,
-                secure=True),
+                secret=True),
             ConfigValue.create_value(
                 ConfigId.SYSTEM_EMAIL,
                 str,

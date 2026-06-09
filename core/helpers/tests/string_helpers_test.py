@@ -1,5 +1,5 @@
 # Package imports
-from src import *
+from core import *
 
 def test_is_email():
     valid = ['test@email.com', 'TEST@email.com', 'test@email.larp.com']

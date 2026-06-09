@@ -12,12 +12,12 @@ class ConfigService(BaseService):
         if self.user.has_permissions(Role.ADMIN):
             return self.config_value_dao.fetch_all()
         else:
-            return self.config_value_dao.fetch_all_unsecure()
+            return self.config_value_dao.fetch_all_non_secret()
         
     def find(self, id: ConfigId | str) -> ConfigValue:
         config = self.config_value_dao.fetch(id)
         if not config: raise NotFoundException()
-        elif not config.is_secure: return config
+        elif not config.is_secret: return config
         elif self.user.has_permissions(Role.ADMIN): return config
         raise ForbiddenException()
     

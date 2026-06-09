@@ -3,8 +3,6 @@ from typing import Self
 # Module imports
 from core.exceptions import *
 from core.model.model_field import ModelField
-# Package imports
-from src.constants import *
 # Third-party imports
 from fastapi import Request
 

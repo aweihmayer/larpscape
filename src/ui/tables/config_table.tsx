@@ -1,48 +1,34 @@
 import React, { Component } from "react";
-import { Button, Dialog, ItemTable, ItemTableHeaderData, translate } from "@/core"
-import { ConfigUpdateDialog, I18N } from "@/src";
+import { ItemTable, Link, translate, ItemTableField } from "@/core"
+import { CONFIG_VALUE_FIELDS, ConfigValueDto, I18N, Routes } from "@/src";
 import { ConfigService } from "@/src";
 
-const HEADERS = [
-    new ItemTableHeaderData(
-        I18N.tables.id,
-        x => x.id,
-        3),
-    new ItemTableHeaderData(
-        I18N.tables.value,
-        x => x.value,
-        1),
-    new ItemTableHeaderData(
-        I18N.tables.description,
-        x => x.description,
-        2,
-        x => translate(I18N.configs[x.id])),
-    new ItemTableHeaderData(
-        I18N.tables.actions,
-        x => null,
-        1,
-        x => {
-            if (x.is_editable) {
-                return [
-                    <Button onClick={ev => openUpdateDialog(x.id)}>
-                        {translate(I18N.buttons.edit)}
-                    </Button>,
-                    <Button onClick={ev => openUpdateDialog(x.id)}>
-                        {translate(I18N.buttons.reset)}
-                    </Button>
-                ];
-            } else {
-                return null;
-            }
-        }),
+const FIELDS = [
+    new ItemTableField<ConfigValueDto>({
+        widget: CONFIG_VALUE_FIELDS.id,
+        render: x => x.id,
+        size: 3,
+    }),
+    new ItemTableField<ConfigValueDto>({
+        widget: CONFIG_VALUE_FIELDS.value,
+        render: x => x.value,
+        size: 1,
+    }),
+    new ItemTableField<ConfigValueDto>({
+        widget: CONFIG_VALUE_FIELDS.description,
+        size: 2,
+    }),
+    new ItemTableField<ConfigValueDto>({
+        widget: CONFIG_VALUE_FIELDS.actions,
+        render: x => <Link route={Routes.app.config.read} params={x} className="btn blue-solid">
+            {translate(I18N.buttons.select)}
+        </Link>,
+        size: 1,
+    })
 ]
 
-function openUpdateDialog(id: string) {
-    Dialog.open(<ConfigUpdateDialog id={id} />)
-}
-
 export class ConfigTable extends Component {
-    tableRef = React.createRef<ItemTable>();
+    tableRef = React.createRef<ItemTable<ConfigValueDto>>();
 
     componentDidMount() {
         ConfigService.fetchAll()
@@ -52,6 +38,10 @@ export class ConfigTable extends Component {
     }
     
     render() {
-        return <ItemTable ref={this.tableRef} headers={HEADERS} />;
+        return <ItemTable
+            ref={this.tableRef}
+            fields={FIELDS}
+            k={(v, i) => v.id}
+        />;
     }
 }

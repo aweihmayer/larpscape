@@ -6,7 +6,7 @@
 
     header {
         display: grid;
-        background: #f8fafc;
+        background: #e5e7eb;
         text-transform: uppercase;
         letter-spacing: 0.03em;
 
@@ -26,7 +26,7 @@
         display: grid;
         border-bottom: 1px solid #e5e7eb;
 
-        div {
+        > div {
             display: flex;
             align-items: center;
             padding: 1em;
@@ -34,8 +34,33 @@
             overflow: hidden;
         }
 
+        &:hover {
+            background-color: #f8fafc;
+        }
+
         &:last-child {
             border-bottom: none;
+        }
+    }
+
+    @media (max-width: 640px) {
+        header {
+            display: none;
+        }
+
+        li {
+            grid-template-columns: 1fr !important;
+            padding: 12px;
+
+            > div {
+                justify-content: space-between;
+                padding: 6px 0;
+
+                &::before {
+                    content: attr(data-label);
+                    font-weight: bold;
+                }
+            }
         }
     }
 }

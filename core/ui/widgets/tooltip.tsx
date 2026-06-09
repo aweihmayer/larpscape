@@ -1,3 +1,4 @@
+import { CircleQuestionMark } from "lucide-react";
 import { Component, JSX } from "react";
 
 interface Props {
@@ -11,6 +12,8 @@ export class Tooltip extends Component<Props, {}> {
 
     render() {
         if (!this.props.tip) return null;
-        else return <span className="tooltip" data-tip={this.props.tip}>?</span>
+        return <span className="tooltip">
+            <CircleQuestionMark />
+        </span>
     }
 }

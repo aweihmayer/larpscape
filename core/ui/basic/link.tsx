@@ -2,7 +2,7 @@ import { Component, MouseEvent, ReactNode } from "react";
 import { App, Route } from "@/core";
 
 interface Props {
-    route: Route | null
+    route: Route
     params?: object
     children?: ReactNode | null
     onClick: ((ev: MouseEvent) => void) | null
@@ -34,10 +34,7 @@ export class Link extends Component<Props, {}> {
     handleClick(ev: MouseEvent) {
         ev.preventDefault();
         ev.stopPropagation();
-        if (this.props.onClick) {
-            this.props.onClick(ev);
-        } else if (this.props.route) {
-            App.goTo(this.props.route, this.props.params);
-        }
+        if (this.props.onClick) this.props.onClick(ev);
+        App.goTo(this.props.route, this.props.params);
     }
 }

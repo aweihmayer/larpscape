@@ -2,7 +2,7 @@ import { Component, MouseEventHandler, ReactNode } from "react";
 import { Loader } from "@/core";
 
 interface Props {
-    type: 'button' | 'submit' | 'reset' | 'hidden'
+    type: 'button' | 'submit' | 'reset'
     onClick:  MouseEventHandler<HTMLButtonElement>,
     children?: ReactNode | null,
     loading: boolean
@@ -33,17 +33,14 @@ export class Button extends Component<Props, State> {
     }
 
     render() {
-        let type = this.props.type == 'hidden' ? 'button' : this.props.type;
-        let style = this.props.type == 'hidden' ? { border: 'none', backgroundColor: 'transparent' } : {}
         return <button
             className={this.props.className}
             disabled={this.state.isDisabled}
-            type={type}
-            style={style}
+            type={this.props.type}
             onClick={ev => { this.handleClick(ev) }}
-            >
-                {this.state.isLoading ? <Loader /> : this.props.children}
-            </button>;
+        >
+            {this.state.isLoading ? <Loader /> : this.props.children}
+        </button>;
     }
 
     async handleClick(ev) {

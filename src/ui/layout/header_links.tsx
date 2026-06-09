@@ -1,5 +1,5 @@
 import { Route } from "@/core";
-import { I18N, Routes } from "@/src";
+import { AuthService, I18N, Role, Routes } from "@/src";
 import { JSX } from "react";
 import { BookOpenText, Calendar, DollarSign, House, Settings, ShoppingCart, User, UserPen } from "lucide-react";
 
@@ -66,7 +66,7 @@ export const NAV_LINKS = [
         {},
         I18N.menu.configs,
         () => <Settings />,
-        () => true
+        () => AuthService.user.hasPermissions(Role.ADMIN)
     )
 ];
 

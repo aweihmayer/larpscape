@@ -1,6 +1,7 @@
 # Native imports
 import json
 # Module imports
+from src.http.access_token_cookie import AccessTokenCookie
 from src.http.request_context import RequestContext
 from src.http.request_services import RequestServices
 # Package imports
@@ -11,15 +12,15 @@ from src.entities import *
 from fastapi import Request
 
 async def add_context_to_request(request: Request, call_next):
-    context = RequestContext()
+    from src.services import AuthService
+    token = AccessTokenCookie().get(request)
+    user = None
+    if token: user = AuthService().fetch_user_by_token(token)
+    context = RequestContext(user)
 
     # Fetch dimensions
-    dimensions = request.headers.get('dimensions', '[]')
-    dimensions = json.loads(dimensions)
-    if not isinstance(dimensions, list): raise BadRequestException()
-    dimensions = [Dimension(x) for x in dimensions]
-    context.dimensions = dimensions
+    # TODO
 
-    request.state.context = context
     request.state.services = RequestServices(context)
+    request.state.context = context
     return await call_next(request)

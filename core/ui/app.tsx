@@ -4,7 +4,7 @@ import { Dialog, flattenObject, getRelativeUrl, Route } from "@/core";
 
 interface State {
     route: Route | null
-    params: object
+    params: Record<string, any>
 };
 
 export class App extends Component<{}, State> {
@@ -19,14 +19,14 @@ export class App extends Component<{}, State> {
     }
 
     render() {
-        if (this.state.route === null) {
+        if (this.state.route === null || this.state.route.view == null) {
             return <div>404</div>;
         } else {
             return this.state.route.view(this.state.params);
         }
     }
 
-    static setRoutes(routes: object | Route[]) {
+    private static setRoutes(routes: object | Route[]) {
         if (Array.isArray(routes)) {
             App.routes = routes;
         } else {
@@ -47,7 +47,13 @@ export class App extends Component<{}, State> {
         return { route: null, params: {} };
     }
 
-    static main() {
+    static main(
+        routes: Route[] | object,
+        lang: string
+    ) {
+        App.setRoutes(routes)
+        App.lang = lang
+        
         let rootElement = document.getElementById('app');
         if (!rootElement) throw new Error('App root not found');
         window.addEventListener('popstate', ev => {
@@ -106,6 +112,7 @@ function changeRoute (
     if (!route) throw Error('Null route');
     let url = route.getRelativeUrl(params);
     // Same location, do nothing
+    document.body.className = '';
     if (url === (getRelativeUrl())) return;
     action(url);
     Dialog.close();

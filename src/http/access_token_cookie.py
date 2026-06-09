@@ -4,4 +4,4 @@ from src.constants import *
 
 class AccessTokenCookie(Cookie):
     def __init__(self):
-        super().__init__('access_token_cookie', AuthTokenDuration.ACCESS)
+        super().__init__('access_token_cookie', AuthTokenDuration.ACCESS, secure=True)

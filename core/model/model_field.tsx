@@ -1,18 +1,19 @@
 export class ModelField {
-    name: string
-    type: string
-    label?: Record<string, string> 
-    tooltip?: Record<string, string>
+    min?: any
+    max?: any
+    options?: any
 
-    constructor(
-        name: string,
-        type: string,
-        label?: Record<string, string>,
-        tooltip: Record<string, string> | null = null
-    ) {
-        this.name = name;
-        this.type = type;
-        this.label = label;
-        this.tooltip = tooltip;
+    constructor(params: {
+        min?: any
+        max?: any
+        options?: any
+    } = {}) {
+        this.min = params.min
+        this.max = params.max
+        this.options = params.options
+    }
+
+    serialize(value: any) : any {
+        throw Error('Not implemented')
     }
 }

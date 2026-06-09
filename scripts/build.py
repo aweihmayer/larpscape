@@ -10,7 +10,6 @@ from src import *
 # Third-party imports
 import sass
 
-
 def build_css():
     print('ℹ️  Building CSS')
     scss_files = list(Path('src/ui').rglob('*.scss'))

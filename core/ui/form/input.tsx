@@ -1,31 +1,27 @@
 import { ChangeEvent, Component, JSX } from "react";
-import { Tooltip, translate } from "@/core";
+import { Tooltip, translate, WidgetField } from "@/core";
 import { ModelField } from "@/core/model/model_field";
 
 interface Props {
-    field: ModelField,
+    widget: WidgetField<any, any>,
+    model: ModelField,
     data: object
 }
 
 export class Input extends Component<Props, {}> {
-    field: ModelField
-    data: object
-
     constructor(props: Props) {
         super(props);
-        this.field = props.field;
-        this.data = props.data;
         this.handleChange = this.handleChange.bind(this);
     }
 
     render() {
-        return <div className="form-row">
-            <div className="label">
-                <label htmlFor={"TODO"}>{translate(this.field.label)}</label>
-                <Tooltip tip={null} />
+        return <div className="input-container">
+            <div className="label-container">
+                <label htmlFor={"TODO"}>{translate(this.props.widget.label)}</label>
+                <Tooltip tip={this.props.widget.tooltip} />
             </div>
             {this.renderInput()}
-            <div className="error">
+            <div className="error-container">
                 <p></p>
             </div>
         </div>;
@@ -35,29 +31,10 @@ export class Input extends Component<Props, {}> {
         throw new Error('Not implemented');
     }
 
-    setMessage(message) {
-        //this.refs.message.innerHTML = message;
-    }
-
-    clearMessage() {
-        //this.refs.message.innerHTML = '';
-    }
-
-    setError(message) {
-        //this.refs.container.classList.add('error');
-        //this.setMessage(message);
-    }
-
-    clearError() {
-        //this.refs.container.classList.remove('error');
-        //this.clearMessage();
-    }
-
-    hasError() {
-        //return this.refs.container.classList.contains('error');
-    }
-
     handleChange(ev: ChangeEvent<HTMLInputElement>) {
-        this.data[this.field.name] = ev.target.value;
+        if (!this.props.widget.setter) return
+        this.props.widget.setter(
+            this.props.data,
+            ev.target.value);
     }
 }

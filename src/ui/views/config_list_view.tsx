@@ -15,10 +15,10 @@ export class ConfigListView extends Component<{}, State> {
 	render() {
 		return <LarpscapeLayout>
 			<section>
-			<h1>
-				<Settings />
-				<span> {translate(I18N.menu.configs)}</span>
-			</h1>
+				<h1>
+					<Settings />
+					<span> {translate(I18N.menu.configs)}</span>
+				</h1>
 				<ConfigTable />
 			</section>
 		</LarpscapeLayout>;

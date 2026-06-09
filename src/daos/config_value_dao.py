@@ -7,8 +7,8 @@ class ConfigValueDao:
     def fetch_all(self) -> list[ConfigValue]:
         return list(ConfigValue.select())
     
-    def fetch_all_unsecure(self) -> list[ConfigValue]:
-        return list(ConfigValue.select().where(ConfigValue.is_secure == False))
+    def fetch_all_non_secret(self) -> list[ConfigValue]: # TODO to "non_secret"
+        return list(ConfigValue.select().where(ConfigValue.is_secret == False))
     
     def fetch(self, id: ConfigId | str) -> ConfigValue | None:
         if isinstance(id, ConfigId): id = id.value

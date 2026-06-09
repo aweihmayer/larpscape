@@ -12,3 +12,9 @@ export function getQueryStringParams(url: string) : object {
     searchParams.forEach((value, key) => { result[key] = value; });
     return result;
 }
+
+export const isSecureOrLocal =
+    window.location.protocol === "https:" ||
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.hostname === "::1";

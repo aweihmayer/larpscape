@@ -35,7 +35,8 @@ class AuthService(BaseService):
         return (access_token, refresh_token)
 
 
-    def fetch_user_by_token(self, id: uuid.UUID) -> User | None:
+    def fetch_user_by_token(self, id: uuid.UUID | str) -> User | None:
+        if isinstance(id, str): id = uuid.UUID(id)
         token = self.token_dao.fetch(id)
         if not token: return None
         return self.user_service.fetch(token.user_id)

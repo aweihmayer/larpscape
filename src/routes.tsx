@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Route } from "@/core";
-import { ConfigListView, EventListView, GameObjectListView, HomeView, ProductListView, UserListView, UserSignupView } from "@/src";
+import { ConfigListView, ConfigReadView, EventListView, GameObjectListView, HomeView, ProductListView, UserCreateView, UserListView, UserSignupView } from "@/src";
 
 function app(
     path: string,
@@ -29,29 +29,32 @@ export const Routes = {
             list: app('/products', (params) => { return <ProductListView />; })
         },
         user: {
+            create: app('/users/create', (params) => { return <UserCreateView />; }),
             list: app('/users', (params) => { return <UserListView />; }),
         },
         config: {
-            list: app('/configs', (params) => { return <ConfigListView />; })
+            list: app('/configs', (params) => { return <ConfigListView />; }),
+            read: app('/configs/{id}', (params) => <ConfigReadView />)
         },
         self: {
             user: app('/self', (params) => { return <UserListView />; }),
             events: app('/self/events', (params) => { return <UserListView />; }),
             purchases: app('/self/purchases', (params) => { return <UserListView />; }),
-        },
-        auth: {
-            signup: app('/auth/signup', (params) => { return <UserSignupView />; })
         }
     },
     api: {
         auth: {
             ping: api('/api/auth/ping', 'GET'),
             refresh: api('/api/auth/refresh', 'POST'),
-            signin: api('/api/auth/signin', 'POST')
+            signin: api('/api/auth/signin', 'POST'),
+            signout: api('/api/auth/signout', 'POST')
         },
         config: {
             list: api('/api/configs'),
             read: api('/api/configs/{id}')
+        },
+        user: {
+            create: api('/api/users', 'POST')
         }
     }
 };

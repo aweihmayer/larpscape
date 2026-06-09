@@ -12,9 +12,9 @@ def test_character_dao(seeder: EntitySeeder):
     config = dao.fetch(ConfigId.MAX_CHARACTERS_PER_USER)
     assert config
 
-    # Fetch all unsecure
-    configs = dao.fetch_all_unsecure()
-    assert len(configs) == len([x for x in ConfigValue.configs() if not x.is_secure])
+    # Fetch all non secrets
+    configs = dao.fetch_all_non_secret()
+    assert len(configs) == len([x for x in ConfigValue.configs() if not x.is_secret])
 
     # Update
     new_value = 123

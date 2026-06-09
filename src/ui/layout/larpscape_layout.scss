@@ -10,5 +10,8 @@ body {
 
 main {
     margin: auto;
-    max-width: 900px;
+
+    > section {
+        margin: 3em;
+    }
 }

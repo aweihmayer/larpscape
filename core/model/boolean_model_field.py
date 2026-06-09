@@ -4,9 +4,5 @@ from typing import Any
 from core.model.model_field import ModelField
 
 class BooleanModelField(ModelField):
-    def __init__(self,
-        required: bool = True,
-        default: Any = None,
-        conditions: str = ''
-    ):
-        super().__init__(bool, required, default, conditions)
+    def _deserialize(self, value: Any) -> Any:
+        return bool(value)

@@ -1,16 +1,18 @@
+# Native imports
+from datetime import date
 # Module imports
 from .dependencies import *
 
 class UserDto(BaseDto):
-    id = DtoField()
-    username = DtoField()
+    id: int = DtoField() # type: ignore
+    username: str = DtoField() # type: ignore
     
-    email = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER)
-    first_name = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER)
-    last_name = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER)
-    date_of_birth = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER)
-    gender = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER)
-    phone = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER)
+    email: str = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER) # type: ignore
+    first_name: str = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER) # type: ignore
+    last_name: str = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER) # type: ignore
+    date_of_birth: date = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER) # type: ignore
+    gender: Gender = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER) # type: ignore
+    phone: str = DtoField(dimension=Dimension.USER_PERSONAL, role=Role.MANAGER) # type: ignore
 
-    role = DtoField(dimension=Dimension.USER_PERMISSION)
-    is_active = DtoField(dimension=Dimension.USER_PERMISSION)
+    role: Role = DtoField(dimension=Dimension.USER_PERMISSION) # type: ignore
+    is_active: bool = DtoField(dimension=Dimension.USER_PERMISSION) # type: ignore

@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { CircleUser, LogOut, Menu, X } from "lucide-react";
 import { Button, Dialog, Link, translate } from "@/core";
-import { I18N, SigninDialog, Routes, AuthService } from "@/src";
+import { I18N, SigninDialog, Routes, AuthService, Role } from "@/src";
 import { NAV_LINKS, USER_LINKS } from "./header_links";
 
 interface State {
@@ -16,26 +16,36 @@ export class LarpscapeHeader extends Component<{}, State> {
     }
 
     render() {
-        let auth;
-        if (AuthService.user) {
-            auth = <Button type="hidden" onClick={(ev) => this.toggleUserMenu()}>
-                {this.state.isUserMenuOpen ? <X /> : <CircleUser />}
-            </Button>
-        } else {
-            auth = <Button className="btn blue solid" onClick={(ev) => { Dialog.open(<SigninDialog />); }}>
-                {translate(I18N.buttons.signin)}
-            </Button>
-        }
-
         return <header id="main-nav">
             <div id="top-bar">
-                <Button type="hidden" onClick={(ev) => this.toggleMenu()}>
-                    {this.state.isMenuOpen ? <X /> : <Menu />}
-                </Button>
-                {auth}
+                <div>
+                    <Button
+                        className="btn-hidden"
+                        onClick={(ev) => this.toggleMenu()}
+                    >
+                        {this.state.isMenuOpen ? <X /> : <Menu />}
+                    </Button>
+                </div>
+                <div>
+                    {AuthService.user.hasPermissions(Role.MEMBER) ? (
+                        <Button
+                            className="btn-hidden"
+                            onClick={() => this.toggleUserMenu()}
+                        >
+                            {this.state.isUserMenuOpen ? <X /> : <CircleUser />}
+                        </Button>
+                    ) : (
+                        <Button
+                            className="btn blue-solid"
+                            onClick={() => Dialog.open(<SigninDialog />)}
+                        >
+                            {translate(I18N.buttons.signin)}
+                        </Button>
+                    )}
+                </div>
             </div>
-            {this.state.isMenuOpen ? <NavMenu /> : null}
-            {this.state.isUserMenuOpen ? <UserMenu /> : null}
+            {this.state.isMenuOpen ? <NavMenu onNav={ev => this.closeMenus} /> : null}
+            {this.state.isUserMenuOpen ? <UserMenu onNav={ev => this.closeMenus} /> : null}
         </header>
     }
 
@@ -62,17 +72,29 @@ export class LarpscapeHeader extends Component<{}, State> {
             isUserMenuOpen: !this.state.isUserMenuOpen
         });
     }
+
+    closeMenus(ev: any) {
+        document.body.className = '';
+        this.setState({
+            isMenuOpen: false,
+            isUserMenuOpen: false
+        });
+    }
 }
 
-class NavMenu extends Component {
+interface MenuProps {
+    onNav: ((ev: any) => void)
+}
+
+class NavMenu extends Component<MenuProps, {}> {
     render() {
         return <nav id="nav-menu">
             <ul>
                 {
                     NAV_LINKS.map(x => {
                         if (!x.condition()) return null;
-                        return <li>
-                            <Link route={Routes.app.game.list}>
+                        return <li key={x.route.path}>
+                            <Link route={x.route} onClick={this.props.onNav}>
                                 {x.icon()}
                                 <span>{translate(x.name)}</span>
                             </Link>
@@ -84,26 +106,26 @@ class NavMenu extends Component {
     }
 }
 
-class UserMenu extends Component {
+class UserMenu extends Component<MenuProps, {}> {
     render() {
         return <nav id="user-menu">
             <ul>
                 {
                     USER_LINKS.map(x => {
                         if (!x.condition()) return null;
-                        return <li>
-                            <Link route={Routes.app.game.list}>
+                        return <li key={x.route.path}>
+                            <Link route={x.route} onClick={this.props.onNav}>
+                                <span>{translate(x.name)} </span>
                                 {x.icon()}
-                                <span>{translate(x.name)}</span>
                             </Link>
                         </li>
                     })
                 }
                 <li>
-                    <Link route={null} onClick={ev => {}}>
+                    <Button className="btn-hidden" onClick={ev => AuthService.signout()}>
+                        <span>{translate(I18N.buttons.signout)} </span>
                         <LogOut />
-                        <span>{translate(I18N.buttons.signout)}</span>
-                    </Link>
+                    </Button>
                 </li>
             </ul>
         </nav>;

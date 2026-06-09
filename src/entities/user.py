@@ -9,7 +9,7 @@ class User(BaseEntity):
     last_name: str = CharField() # type: ignore
     date_of_birth: date = DateField() # type: ignore
     gender: str = CharField() # type: ignore
-    phone: int | None = IntegerField(null=True) # type: ignore
+    phone: str | None = CharField(null=True) # type: ignore
     password: str = CharField() # type: ignore
     salt: str = CharField() # type: ignore
     role: int = IntegerField() # type: ignore

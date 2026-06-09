@@ -1,7 +1,6 @@
-import { Component } from "react";
+import { Component, SubmitEvent } from "react";
 import { App, Button, Dialog, Link, PasswordInput, TextInput, Toast, translate } from "@/core";
-import { Routes, UserModel } from "@/src";
-import { AuthService, I18N } from "@/src";
+import { Routes, UserModel, AuthService, I18N, USER_FIELDS } from "@/src";
 import { LogIn } from "lucide-react";
 
 interface State {
@@ -18,20 +17,21 @@ export class SigninDialog extends Component<{}, State> {
 
     render() {
         return <dialog>
-            <form onSubmit={ev => { this.handleSubmit(ev) }}>
-                <h1>
+            <form onSubmit={ev => this.handleSubmit(ev)}>
+                <TextInput widget={USER_FIELDS.username} model={UserModel.fields.username} data={this.data} />
+                <PasswordInput widget={USER_FIELDS.password} model={UserModel.fields.password} data={this.data} />
+                <Button type="submit" className="btn blue-solid full">
                     <span>{translate(I18N.buttons.signin)} </span>
                     <LogIn />
-                </h1>
-                <TextInput field={UserModel.username} data={this.data} />
-                <PasswordInput field={UserModel.password} data={this.data} />
-                <Button type="submit" className="btn blue">{translate(I18N.buttons.signin)}</Button>
-                <Link route={Routes.app.auth.signup} className="btn blue solid">{translate(I18N.buttons.signup)}</Link>
+                </Button>
+                <Link route={Routes.app.user.create} className="btn blue full">
+                    {translate(I18N.buttons.signup)}
+                </Link>
             </form>
         </dialog>;
     }
 
-    handleSubmit(ev) {
+    handleSubmit(ev: SubmitEvent) {
         ev.preventDefault();
         if (this.state.isLoading) return
         AuthService.signin(this.data)

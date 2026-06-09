@@ -5,7 +5,7 @@ import { removeQueryString, replacePlaceholders } from "@/core";
 export class Route {
     path: string;
     method: string;
-    view: ((params: object) => ReactElement) | null;
+    view: ((params: Record<string, any>) => ReactElement) | null;
 
     static refreshRoute: Route | null = null;
     static refreshPromise: Promise = null;
@@ -13,7 +13,7 @@ export class Route {
     constructor(
         path: string,
         method: string = 'GET',
-        view: ((params: object) => ReactElement) | null = null
+        view: ((params: Record<string, any>) => ReactElement) | null = null
     ) {
         this.path = path;
         this.method = method;
