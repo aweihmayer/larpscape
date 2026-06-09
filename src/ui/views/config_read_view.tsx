@@ -32,6 +32,10 @@ export class ConfigReadView extends Component<{}, State> {
 							<span> {this.state.config.id}</span>
 						</h1>
 						<FieldRow widget={CONFIG_VALUE_FIELDS.value} data={this.state.config} />
+						<FieldRow widget={CONFIG_VALUE_FIELDS.initial_value} data={this.state.config} />
+						<FieldRow widget={CONFIG_VALUE_FIELDS.data_type} data={this.state.config} />
+						<FieldRow widget={CONFIG_VALUE_FIELDS.is_secret} data={this.state.config} />
+						<FieldRow widget={CONFIG_VALUE_FIELDS.is_editable} data={this.state.config} />
 						<FieldRow widget={CONFIG_VALUE_FIELDS.description} data={this.state.config} />
 					</section>
 				) : (

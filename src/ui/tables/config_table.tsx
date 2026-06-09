@@ -6,12 +6,10 @@ import { ConfigService } from "@/src";
 const FIELDS = [
     new ItemTableField<ConfigValueDto>({
         widget: CONFIG_VALUE_FIELDS.id,
-        render: x => x.id,
         size: 3,
     }),
     new ItemTableField<ConfigValueDto>({
         widget: CONFIG_VALUE_FIELDS.value,
-        render: x => x.value,
         size: 1,
     }),
     new ItemTableField<ConfigValueDto>({

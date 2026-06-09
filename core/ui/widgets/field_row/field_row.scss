@@ -1,0 +1,13 @@
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.field-row-label {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.field-row-contents {
+
+}

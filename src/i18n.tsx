@@ -1,6 +1,16 @@
 import { ConfigId, Gender, Role } from "@/src";
 
 export const I18N = {
+    boolean: {
+        true: {
+            en: "Yes",
+            fr: "Oui"
+        },
+        false: {
+            en: "No",
+            fr: "Non"
+        }
+    },
     buttons: {
         create: {
             en: "Create",

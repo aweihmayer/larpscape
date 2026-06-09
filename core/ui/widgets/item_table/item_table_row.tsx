@@ -15,15 +15,25 @@ export class ItemTableRow<T> extends Component<ItemProps<T>, {}> {
 	render() {
 		let size = this.props.fields.map(x => x.size + 'fr');
 		const style = { gridTemplateColumns: size.join(' ') };
-		return <li style={style}>
+		return <li
+			style={style}
+		>
 			{this.props.fields.map((v, i) => {
 				let render
 				if (v.render) render = v.render
 				else if (v.widget.render) render = v.widget.render
 				else if (v.widget.getter) render = v.widget.getter
 				else throw Error('No valid render')
-				return <div key={i} data-label={translate(v.widget.label)}>
-					{render(this.props.item)}
+				return <div
+					key={i}
+					className="cell"
+				>
+					<div className="mobile-label">
+						{translate(v.widget.label)}
+					</div>
+					<div className="cell-contents">
+						{render(this.props.item)}
+					</div>
 				</div>
 			})}
 		</li>
