@@ -42,7 +42,6 @@ export class SigninDialog extends Component<{}, Loadable> {
         ev.preventDefault();
         if (this.state.loading) return
         this.setState({ loading: true })
-        return
         AuthService.signin(this.data)
             .then(x => {
                 if (x.response.ok) {

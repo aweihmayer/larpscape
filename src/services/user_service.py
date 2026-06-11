@@ -36,8 +36,12 @@ class UserService(BaseService):
         if self.fetch(model.username) or self.fetch(model.email):
             raise ConflictException()
         
-        # Create new user
         # TODO check min age
+
+        # TODO make sure role assignment is safe
+        if self.user.role == Role.GUEST or model.role == None:
+            model.role = Role.MEMBER
+
         requires_confirmation = self.configs.signup_requires_email_confirmation
         user = self.user_dao.create(model, requires_confirmation)
         if requires_confirmation: self.email_service.send_confirmation(user)

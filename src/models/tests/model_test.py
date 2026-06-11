@@ -1,4 +1,5 @@
 # Package imports
+from core import *
 from src import *
 # Third-party imports
 import pytest

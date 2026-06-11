@@ -16,6 +16,26 @@ export class LarpscapeHeader extends Component<{}, State> {
     }
 
     render() {
+        let userMenuButton
+        if (this.state.isMenuOpen) {
+            userMenuButton = null
+        } else if (AuthService.user.hasPermissions(Role.MEMBER)) {
+            userMenuButton = <Button
+                className="btn"
+                onClick={() => this.toggleUserMenu()}
+            >
+                {this.state.isUserMenuOpen ? <X /> : <CircleUser />}
+            </Button>
+        } else {
+            userMenuButton = <Button
+                className="btn blue-solid"
+                onClick={() => Dialog.open(<SigninDialog />)}
+            >
+                <span>{translate(I18N.buttons.signin)} </span>
+                <LogIn />
+            </Button>
+        }
+
         return <header id="main-nav">
             <div id="top-bar">
                 <div>
@@ -27,22 +47,7 @@ export class LarpscapeHeader extends Component<{}, State> {
                     </Button>
                 </div>
                 <div>
-                    {AuthService.user.hasPermissions(Role.MEMBER) ? (
-                        <Button
-                            className="btn"
-                            onClick={() => this.toggleUserMenu()}
-                        >
-                            {this.state.isUserMenuOpen ? <X /> : <CircleUser />}
-                        </Button>
-                    ) : (
-                        <Button
-                            className="btn blue-solid"
-                            onClick={() => Dialog.open(<SigninDialog />)}
-                        >
-                            <span>{translate(I18N.buttons.signin)} </span>
-                            <LogIn />
-                        </Button>
-                    )}
+                    {userMenuButton}
                 </div>
             </div>
             {this.state.isMenuOpen ? <NavMenu onNav={ev => this.closeMenus()} /> : null}
@@ -100,10 +105,8 @@ class NavMenu extends Component<MenuProps, {}> {
                                 onClick={this.props.onNav}
                                 className="btn"
                             >
-                                <span>
-                                    {x.icon()}
-                                    <span>{translate(x.name)}</span>
-                                </span>
+                                {x.icon()}
+                                <span>{translate(x.name)}</span>
                             </Link>
                         </li>
                     })
@@ -126,10 +129,8 @@ class UserMenu extends Component<MenuProps, {}> {
                                 onClick={this.props.onNav}
                                 className="btn"
                             >
-                                <span>
-                                    <span>{translate(x.name)}</span>
-                                    {x.icon()}
-                                </span>
+                                <span>{translate(x.name)}</span>
+                                {x.icon()}
                             </Link>
                         </li>
                     })

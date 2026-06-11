@@ -1,4 +1,5 @@
 # Package imports
+from core import *
 from src import *
 
 def test_user_event_dao(seeder: EntitySeeder):

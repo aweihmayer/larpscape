@@ -24,21 +24,14 @@ export class UserCreateView extends Component<{}, State> {
 				</h1>
 
 				<form onSubmit={ev => this.handleSubmit(ev)}>
-					<fieldset>
-						<legend>{translate(I18N.headings.credentials)}</legend>
-						<TextInput field={USER_FIELDS.username} data={this.data} />
-						<EmailInput field={USER_FIELDS.email} data={this.data} />
-						<TelInput field={USER_FIELDS.phone} data={this.data} />
-						<PasswordInput field={USER_FIELDS.password} data={this.data} />
-					</fieldset>
-
-					<fieldset>
-						<legend>{translate(I18N.headings.personalDetails)}</legend>
-						<TextInput field={USER_FIELDS.first_name} data={this.data} />
-						<TextInput field={USER_FIELDS.last_name} data={this.data} />
-						<SelectInput field={USER_FIELDS.gender} data={this.data} />
-						<DateInput field={USER_FIELDS.date_of_birth} data={this.data} />
-					</fieldset>
+					<TextInput field={USER_FIELDS.username} data={this.data} />
+					<EmailInput field={USER_FIELDS.email} data={this.data} />
+					<TelInput field={USER_FIELDS.phone} data={this.data} />
+					<PasswordInput field={USER_FIELDS.password} data={this.data} />
+					<TextInput field={USER_FIELDS.first_name} data={this.data} />
+					<TextInput field={USER_FIELDS.last_name} data={this.data} />
+					<SelectInput field={USER_FIELDS.gender} data={this.data} />
+					<DateInput field={USER_FIELDS.date_of_birth} data={this.data} />
 
 					<Button type="submit" className="btn blue-solid full">
 						{translate(I18N.buttons.create)}

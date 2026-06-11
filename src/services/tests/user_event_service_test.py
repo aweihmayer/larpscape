@@ -1,6 +1,7 @@
 # Native imports
 from datetime import datetime
 # Package imports
+from core import *
 from src import *
 # Third-party imports
 import pytest

@@ -1,4 +1,5 @@
 # Package imports
+from core import *
 from src import *
 
 def test_token_dao(seeder: EntitySeeder):
