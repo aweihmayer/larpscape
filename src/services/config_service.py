@@ -21,10 +21,11 @@ class ConfigService(BaseService):
         elif self.user.has_permissions(Role.ADMIN): return config
         raise ForbiddenException()
     
-    def update(self, id: ConfigId | str, value: Any) -> ConfigValue:
+    def update(self, id: ConfigValue | ConfigId | str, value: Any) -> ConfigValue:
         if not self.user.has_permissions(Role.ADMIN):
             raise ForbiddenException()
-        config = self.find(id)
+        
+        config = id if isinstance(id, ConfigValue) else self.find(id) 
         if not config.is_editable and not self.user.has_permissions(Role.SYSTEM):
             raise BadRequestException()
         self.config_value_dao.update(config, value)

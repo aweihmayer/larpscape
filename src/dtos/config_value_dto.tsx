@@ -1,7 +1,7 @@
 import * as Constants from "@/src/constants";
 
 export class ConfigValueDto {
-	data_type?: string
+	data_type?: Constants.DataType
 	id?: Constants.ConfigId
 	initial_value?: string
 	is_editable?: boolean

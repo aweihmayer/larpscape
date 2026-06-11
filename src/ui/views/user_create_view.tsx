@@ -1,5 +1,5 @@
 import { Component, SubmitEvent } from "react";
-import { I18N, LarpscapeLayout, USER_FIELDS, UserModel, UserService } from "@/src";
+import { I18N, LarpscapeLayout, USER_FIELDS, UserService } from "@/src";
 import { Button, DateInput, EmailInput, PasswordInput, SelectInput, TelInput, TextInput, translate } from "@/core";
 import { UserPlus } from "lucide-react";
 
@@ -26,18 +26,18 @@ export class UserCreateView extends Component<{}, State> {
 				<form onSubmit={ev => this.handleSubmit(ev)}>
 					<fieldset>
 						<legend>{translate(I18N.headings.credentials)}</legend>
-						<TextInput widget={USER_FIELDS.username} model={UserModel.fields.username} data={this.data} />
-						<EmailInput widget={USER_FIELDS.email} model={UserModel.fields.email} data={this.data} />
-						<TelInput widget={USER_FIELDS.phone} model={UserModel.fields.phone} data={this.data} />
-						<PasswordInput widget={USER_FIELDS.password} model={UserModel.fields.password} data={this.data} />
+						<TextInput field={USER_FIELDS.username} data={this.data} />
+						<EmailInput field={USER_FIELDS.email} data={this.data} />
+						<TelInput field={USER_FIELDS.phone} data={this.data} />
+						<PasswordInput field={USER_FIELDS.password} data={this.data} />
 					</fieldset>
 
 					<fieldset>
 						<legend>{translate(I18N.headings.personalDetails)}</legend>
-						<TextInput widget={USER_FIELDS.first_name} model={UserModel.fields.first_name} data={this.data} />
-						<TextInput widget={USER_FIELDS.last_name} model={UserModel.fields.last_name} data={this.data} />
-						<SelectInput widget={USER_FIELDS.gender} model={UserModel.fields.gender} data={this.data} />
-						<DateInput widget={USER_FIELDS.date_of_birth} model={UserModel.fields.date_of_birth} data={this.data} />
+						<TextInput field={USER_FIELDS.first_name} data={this.data} />
+						<TextInput field={USER_FIELDS.last_name} data={this.data} />
+						<SelectInput field={USER_FIELDS.gender} data={this.data} />
+						<DateInput field={USER_FIELDS.date_of_birth} data={this.data} />
 					</fieldset>
 
 					<Button type="submit" className="btn blue-solid full">

@@ -19,7 +19,7 @@ export class FieldRow extends Component<Props, {}> {
         if (this.props.widget.render) render = this.props.widget.render
         else if (this.props.widget.getter) render = this.props.widget.getter
         else throw Error('No valid render')
-        console.log(render, render(this.props.data))
+
         return <div className="field-row">
             <div className="field-row-label">
                 {translate(this.props.widget.label)}

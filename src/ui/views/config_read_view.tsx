@@ -1,7 +1,7 @@
 import { Component } from "react";
-import { CONFIG_VALUE_FIELDS, ConfigService, ConfigValueDto, I18N, LarpscapeLayout } from "@/src";
+import { AuthService, CONFIG_VALUE_FIELDS, ConfigService, ConfigValueDto, ConfigValueUpdateDialog, ConfirmationDialog, I18N, LarpscapeLayout, Role } from "@/src";
 import { Settings } from "lucide-react";
-import { App, FieldRow, Loader, translate } from "@/core";
+import { App, Button, Dialog, FieldRow, Loader, translate } from "@/core";
 
 interface State {
 	config: ConfigValueDto | null
@@ -23,6 +23,10 @@ export class ConfigReadView extends Component<{}, State> {
 	}
 
 	render() {
+		const editable = (this.state.config
+			&& this.state.config.is_editable
+			&& AuthService.user.hasPermissions(Role.ADMIN))
+
 		return <LarpscapeLayout>
 			{
 				this.state.config ? (
@@ -31,6 +35,18 @@ export class ConfigReadView extends Component<{}, State> {
 							<Settings />
 							<span> {this.state.config.id}</span>
 						</h1>
+						{
+							editable ? (
+								<div>
+									<Button className="btn blue-solid full" onClick={ev => this.openUpdateDialog()}>
+										{translate(I18N.buttons.update)}
+									</Button>
+									<Button className="btn blue full"  onClick={ev => this.openResetDialog()}>
+										{translate(I18N.buttons.reset)}
+									</Button>
+								</div>
+							) : null
+						}
 						<FieldRow widget={CONFIG_VALUE_FIELDS.value} data={this.state.config} />
 						<FieldRow widget={CONFIG_VALUE_FIELDS.initial_value} data={this.state.config} />
 						<FieldRow widget={CONFIG_VALUE_FIELDS.data_type} data={this.state.config} />
@@ -45,5 +61,27 @@ export class ConfigReadView extends Component<{}, State> {
 				)
 			}
 		</LarpscapeLayout>;
+	}
+
+	openUpdateDialog() {
+		Dialog.open(
+			<ConfigValueUpdateDialog
+				config={this.state.config!}
+				callback={x => this.setState({ config: x.data })} />
+		)
+	}
+
+	openResetDialog() {
+		Dialog.open(
+			<ConfirmationDialog
+				message={I18N.dialogs.confirm.config}
+				onConfirm={() => {
+					ConfigService
+						.reset(this.state.config!)
+						.then(x => this.setState({ config: x }))
+					}
+				}
+			/>
+		)
 	}
 }

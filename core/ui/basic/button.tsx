@@ -1,50 +1,42 @@
 import { Component, MouseEventHandler, ReactNode } from "react";
-import { Loader } from "@/core";
+import { Loadable, Loader } from "@/core";
 
-interface Props {
+interface Props extends Loadable {
     type: 'button' | 'submit' | 'reset'
     onClick:  MouseEventHandler<HTMLButtonElement>,
     children?: ReactNode | null,
-    loading: boolean
     className: string
     disabled: boolean
 }
 
-interface State {
-    isDisabled: boolean
-    isLoading: boolean
-}
-
-export class Button extends Component<Props, State> {
+export class Button extends Component<Props> {
     static defaultProps = {
         onClick: null,
         type: 'button',
-        loading: false,
         className: '',
         disabled: false
     };
 
     constructor(props: Props) {
-        super(props);
-        this.state = {
-            isDisabled: props.disabled,
-            isLoading: props.loading
-        };
+        super(props)
     }
 
     render() {
         return <button
             className={this.props.className}
-            disabled={this.state.isDisabled}
+            disabled={this.props.disabled}
             type={this.props.type}
             onClick={ev => { this.handleClick(ev) }}
         >
-            {this.state.isLoading ? <Loader /> : this.props.children}
+            <span>
+                {this.props.loading ? <Loader /> : this.props.children}
+            </span>
         </button>;
     }
 
     async handleClick(ev) {
-        if (!this.props.onClick) return;
+        if (!this.props.onClick) return
+        else if (this.props.loading || this.props.disabled) return
         this.disable(true);
         await this.props.onClick(ev);
         this.enable();
@@ -57,13 +49,5 @@ export class Button extends Component<Props, State> {
 
     enable() {
         this.setState({ isDisabled: false });
-    }
-
-    startLoading() {
-        this.setState({ isLoading: true });
-    }
-
-    stopLoading() {
-        this.setState({ isLoading: false });
     }
 }

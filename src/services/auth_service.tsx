@@ -1,10 +1,8 @@
-import { App, Cookie } from "@/core";
-import { Role, Routes, UserDto } from "@/src";
+import { App } from "@/core"
+import { Role, Routes, UserDto } from "@/src"
 
 export class AuthService {
     static user: UserDto = UserDto.fromJson({ role: Role.GUEST })
-    static accessTokenCookie = new Cookie('access_token_cookie')
-    static refreshTokenCookie = new Cookie('refresh_token_cookie')
 
     static signin(data: object) {
         return Routes.api.auth.signin.fetch(data).then(x => {

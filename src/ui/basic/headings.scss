@@ -1,3 +1,14 @@
 section > h1, dialog > h1 {
+    font-size: 0.8em;
     text-transform: uppercase;
+    margin: 0 0 1em 0;
+    display: flex;
+    align-items: center;
+    gap: 0.15em;
+    
+    svg {
+        font-size: 1em;
+        width: 1em;
+        height: 1em;
+    }
 }

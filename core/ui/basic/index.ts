@@ -1,3 +1,4 @@
-export { Button } from "./button";
-export { Link } from "./link";
-export { Loader } from "./loader";
+export * from "./interfaces"
+export * from "./button"
+export * from "./link"
+export * from "./loader"

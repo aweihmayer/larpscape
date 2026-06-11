@@ -1,46 +1,43 @@
-$blue: #0088ff;
-$blue-dark: #0051ff;
-$white: #fff;
-
-.btn-hidden {
-    background-color: transparent;
-    border: 0px;
-}
-
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     cursor: pointer;
-    padding: 0.6em;
-    margin: 0.6em 0em 0.6em 0em;
+    padding: 0.2em 0.4em 0.2em 0.4em;
+    margin: 0 0 0.2em 0;
     text-align: center;
     text-decoration: none;
     box-sizing: border-box;
-    border: none;
+    border: 0;
+    background-color: transparent;
+    font-size: inherit;
+
+    > * {
+        font-size: 0.6em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.15em;
+    }
 
     &.full {
         width: 100%;
     }
 
     &.blue {
-        color: $blue;
-        background-color: transparent;
-        border: 2px solid $blue;
+        color: var(--blue);
+        border: 2px solid var(--blue);
 
         &:hover {
-            color: $blue-dark;
-            border-color: $blue-dark;
+            color: var(--blue-dark);
+            border-color: var(--blue-dark);
         }
     }
 
     &.blue-solid {
-        color: #fff;
-        background-color: $blue;
+        color: var(--white);
+        background-color: var(--blue);
 
         &:hover {
-            background-color: $blue-dark;
+            background-color: var(--blue-dark);
         }
     }
-
 }

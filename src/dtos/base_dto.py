@@ -14,8 +14,7 @@ class BaseDto:
         for name, field in self._get_fields().items():
             if not hasattr(obj, name): continue
             elif not include_all and not field.is_included(context): continue
-            value = getattr(obj, name)
-            setattr(self, name, value)
+            field.set(obj, self, name)
 
     @classmethod
     def many(cls,

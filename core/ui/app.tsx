@@ -1,120 +1,136 @@
-import { Component } from "react";
-import { createRoot } from "react-dom/client";
-import { Dialog, flattenObject, getRelativeUrl, Route } from "@/core";
+import { Component, JSX } from "react";
+import { Dialog, getRelativeUrl, Route } from "@/core";
+
+interface Props {
+    routes: Route[]
+    lang?: string
+    loading?: boolean
+    loadRender?: (() => JSX.Element)
+    errorRender?: ((code: number) => JSX.Element)
+    isUserAuthenticated?: (() => boolean)
+}
 
 interface State {
     route: Route | null
     params: Record<string, any>
-};
+    isLoading: boolean
+    lang: string
+}
 
-export class App extends Component<{}, State> {
-    static instance: App | null = null;
-    static routes: Route[] = [];
-    static lang: string = 'en';
+export class App extends Component<Props, State> {
+    static instance: App | null = null
+    static defaultProps = {
+        lang: 'en',
+        loading: false,
+        loadRender: () => null,
+        errorRender: (code: number) => <div>{code}</div>,
+        isUserAuthenticated: () => false
+    }
 
-    constructor(props: {}) {
-        super(props);
-        App.instance = this;
-        this.state = App.currentRoute();
+    constructor(props: Props) {
+        super(props)
+        App.instance = this
+        this.state = {
+            ...this.getCurrentRoute(),
+            lang: this.props.lang!,
+            isLoading: this.props.loading!
+        }
     }
 
     render() {
-        if (this.state.route === null || this.state.route.view == null) {
-            return <div>404</div>;
+        if (this.state.isLoading) {
+            return this.props.loadRender!()
+        } else if (!this.state.route) {
+            return this.props.errorRender!(404)
+        } else if (!this.state.route.auth()) {
+            const code = this.props.isUserAuthenticated!() ? 403 : 401
+            return this.props.errorRender!(code)
         } else {
-            return this.state.route.view(this.state.params);
+            return this.state.route.view!(this.state.params)
         }
     }
 
-    private static setRoutes(routes: object | Route[]) {
-        if (Array.isArray(routes)) {
-            App.routes = routes;
-        } else {
-            let flatRoutes = flattenObject(routes, Route);
-            App.routes = Object.values(flatRoutes);
-        }
+    componentDidMount() {
+        if (App.instance) return
+        window.addEventListener('popstate', ev => App.instance!.setState({
+            ...this.getCurrentRoute(),
+            isLoading: false
+        }))
     }
 
-    static currentRoute(): State {
-        let url = getRelativeUrl();
-        for (const route of App.routes) {
-            if (!route.matches(url)) continue;
-            return {
-                route: route,
-                params: route.getParams(url)};
+    getCurrentRoute() {
+        let url = getRelativeUrl()
+        let route: Route | null = null
+        let params = {}
+        for (const r of this.props.routes) {
+            if (!r.matches(url)) continue
+            route = r
+            params = r.getParams(url)
+            break
         }
-
-        return { route: null, params: {} };
-    }
-
-    static main(
-        routes: Route[] | object,
-        lang: string
-    ) {
-        App.setRoutes(routes)
-        App.lang = lang
         
-        let rootElement = document.getElementById('app');
-        if (!rootElement) throw new Error('App root not found');
-        window.addEventListener('popstate', ev => {
-            const current = App.currentRoute();
-            App.reload(current.route, current.params)
-        });
-        const root = createRoot(rootElement);
-        root.render(<App />);
+        return { route, params }
     }
 
     static replaceRoute(
         route: Route,
-        params: object = {}
+        params: object = {},
+        force: boolean = false
     ) {
-        changeRoute(
+        App.changeRoute(
             route,
             params,
             x => { 
                 window.history.replaceState('', '', x);
-                window.scrollTo(0, 0);
-            });
+            },
+            force);
     }
 
     static goTo(
         route: Route,
-        params: object = {}
+        params: object = {},
+        force: boolean = false
     ) {
-        changeRoute(
+        App.changeRoute(
             route,
             params,
             x => {
-                window.history.pushState('', '', x);
-                window.scrollTo(0, 0);
-            });
+                window.history.pushState('', '', x)
+                window.scrollTo(0, 0)
+            },
+            force)
     }
 
     static reload(
         route: Route | null = null,
-        params: object = {}
+        params: object = {},
+        force: boolean = false
     ) {
-        if (App.instance == null) return;
-        route = route ?? App.instance.state.route;
-        changeRoute(
-            route,
-            params,
-            x => { window.history.replaceState('', '', x) });
+        App.changeRoute(
+            route ?? App.instance!.state.route,
+            route ? params : App.instance!.state.params,
+            x => {
+                window.history.replaceState('', '', x)
+                window.scrollTo(0, 0)
+            },
+            force)
     }
-}
 
-function changeRoute (
-    route: Route | null,
-    params: object,
-    action: Function
-) {
-    if (!App.instance) throw Error('App not started');
-    if (!route) throw Error('Null route');
-    let url = route.getRelativeUrl(params);
-    // Same location, do nothing
-    document.body.className = '';
-    if (url === (getRelativeUrl())) return;
-    action(url);
-    Dialog.close();
-    App.instance.setState(App.currentRoute());
+    private static changeRoute (
+        route: Route | null,
+        params: object,
+        action: ((url: string) => void),
+        force: boolean = false
+    ) {
+        if (!route) return
+        let url = route.getRelativeUrl(params)
+        document.body.className = ''
+        Dialog.close()
+        // if (!force && url === (getRelativeUrl())) return
+        action(url)
+        App.instance!.setState({
+            route: route,
+            params: params
+        })
+    }
 }

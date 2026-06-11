@@ -1,5 +1,5 @@
 import { createPromise } from "@/core";
-import { ConfigValueDto, Routes } from "@/src";
+import { ConfigValueDto, ConfigValueModel, Routes } from "@/src";
 
 export class ConfigService {
     static configs: object[] | null = null;
@@ -18,5 +18,19 @@ export class ConfigService {
         return Routes.api.config.read.fetch(null, { id: id }).then(x => {
             return ConfigValueDto.fromJson(x.data);
         });
+    }
+
+    static reset(config: ConfigValueDto) {
+        return Routes.api.config.reset.fetch(null, { id: config.id }).then(x => {
+            return ConfigValueDto.fromJson(x.data);
+        });
+    }
+
+    static update(config: ConfigValueDto, model: ConfigValueModel) {
+        return Routes.api.config.update
+            .fetch(model, { id: config.id })
+            .then(x => {
+                return { response: x.response, data: ConfigValueDto.fromJson(x.data) }
+            });
     }
 }

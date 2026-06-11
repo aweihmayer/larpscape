@@ -1,6 +1,6 @@
 export class StoredValue {
-    duration?: number = null;
-    value: any = undefined;
+    duration?: number
+    value?: any
 
     constructor(duration: number) {
         this.duration = duration;

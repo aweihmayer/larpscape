@@ -15,6 +15,8 @@ def build_css():
     scss_files = list(Path('src/ui').rglob('*.scss'))
     scss_files.extend(Path('core/ui').rglob('*.scss'))
     scss_files = sorted(scss_files)
+    scss_files = [x for x in scss_files if not x.name.endswith('vars.scss')]
+    scss_files.insert(0, Path('src/ui/basic/vars.scss'))
     css = []
     for f in scss_files:
         css.append(sass.compile(filename=str(f)))

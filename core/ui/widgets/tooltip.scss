@@ -14,8 +14,8 @@
     &:hover::after, &:focus::after {
         content: attr(data-tip);
         position: absolute;
-        background-color: #000;
-        color: #fff;
+        background-color: var(--black);
+        color: var(--white);
         padding: 5px;
         border-radius: 5px;
         top: 100%;

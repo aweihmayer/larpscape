@@ -1,14 +1,14 @@
 .item-table {
     display: grid;
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
     overflow: hidden;
+    font-size: 0.4em;
 
     header {
         display: grid;
         background: #e5e7eb;
         text-transform: uppercase;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.04em;
 
         div {
             padding: 1em;

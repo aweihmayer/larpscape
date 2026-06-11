@@ -3,9 +3,10 @@ import { formatToRegex } from "@/core";
 import { removeQueryString, replacePlaceholders } from "@/core";
 
 export class Route {
-    path: string;
-    method: string;
-    view: ((params: Record<string, any>) => ReactElement) | null;
+    path: string
+    method: string
+    view?: ((params: Record<string, any>) => ReactElement)
+    auth: (() => boolean)
 
     static refreshRoute: Route | null = null;
     static refreshPromise: Promise = null;
@@ -13,11 +14,13 @@ export class Route {
     constructor(
         path: string,
         method: string = 'GET',
-        view: ((params: Record<string, any>) => ReactElement) | null = null
+        view?: ((params: Record<string, any>) => ReactElement),
+        auth?: (() => boolean)
     ) {
         this.path = path;
         this.method = method;
         this.view = view;
+        this.auth = auth ?? (() => true)
     }
 
     async fetch(

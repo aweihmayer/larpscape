@@ -18,6 +18,7 @@ JS_TYPES = {
 
 CONSTANTS = {
     'config_id.tsx': ConfigId,
+    'data_type.tsx': DataType,
     'dimension.tsx': Dimension,
     'gender.tsx': Gender,
     'role.tsx': Role
@@ -61,7 +62,7 @@ def convert_constants():
             v = f'\t{x.name} = {"'" + x.value + "'" if isinstance(x.value, str) else x.value}'
             values.append(v)
 
-    write_if_not_exists(f'src/constants/{file}', (
+        write_if_not_exists(f'src/constants/{file}', (
 f"""export enum {constant.__name__} {{
 {',\n'.join(values)}
 }}

@@ -1,7 +1,5 @@
 import { Component } from "react";
-import { I18N, LarpscapeLayout } from "@/src";
-import { Settings } from "lucide-react";
-import { translate } from "@/core";
+import { LarpscapeLayout } from "@/src";
 import { ConfigTable } from "@/src";
 
 interface State {}
@@ -14,13 +12,7 @@ export class ConfigListView extends Component<{}, State> {
 
 	render() {
 		return <LarpscapeLayout>
-			<section>
-				<h1>
-					<Settings />
-					<span> {translate(I18N.menu.configs)}</span>
-				</h1>
-				<ConfigTable />
-			</section>
+			<ConfigTable />
 		</LarpscapeLayout>;
 	}
 }

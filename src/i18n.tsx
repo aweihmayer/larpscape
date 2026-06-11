@@ -6,12 +6,28 @@ export const I18N = {
             en: "Yes",
             fr: "Oui"
         },
+        True: {
+            en: "Yes",
+            fr: "Oui"
+        },
         false: {
+            en: "No",
+            fr: "Non"
+        },
+        False: {
             en: "No",
             fr: "Non"
         }
     },
     buttons: {
+        cancel: {
+            en: "Cancel",
+            fr: "Annuler"
+        },
+        confirm: {
+            en: "Confirm",
+            fr: "Confirmer"
+        },
         create: {
             en: "Create",
             fr: "Créer"
@@ -43,6 +59,10 @@ export const I18N = {
         signup: {
             en: "Sign up",
             fr: "S'enregistrer"
+        },
+        update: {
+            en: "Update",
+            fr: "Modifier"
         }
     },
     constants: {
@@ -147,6 +167,14 @@ export const I18N = {
                 en: "System",
                 fr: "Système"
             },
+        }
+    },
+    dialogs: {
+        confirm: {
+            config: {
+                en: "Are you sure you want to reset the config?",
+                fr: "Êtes-vous sûr de vouloir réinitialiser la configuration?"
+            }
         }
     },
     headings: {
@@ -288,6 +316,56 @@ export const I18N = {
         }
     },
     toasts: {
+        codes: {
+            200: {
+                title: {
+                    en: "Success",
+                    fr: "Succès"
+                }
+            },
+            201: {
+                title: {
+                    en: "Created",
+                    fr: "Créé"
+                }
+            },
+            400: {
+                title: {
+                    en: "Bad request",
+                    fr: "Mauvaise requête"
+                }
+            },
+            401: {
+                title: {
+                    en: "Unauthorized",
+                    fr: "Non autorisé"
+                }
+            },
+            403: {
+                title: {
+                    en: "Forbidden",
+                    fr: "Interdit"
+                }
+            },
+            404: {
+                title: {
+                    en: "Not found",
+                    fr: "Introuvable"
+                }
+            },
+            409: {
+                title: {
+                    en: "Conflict",
+                    fr: "Conflit"
+                }
+            },
+            500: {
+                title: {
+                    en: "Server error",
+                    fr: "Erreur de serveur"
+                }
+            }
+        },
         error: {
             en: "Error",
             fr: "Erreur"

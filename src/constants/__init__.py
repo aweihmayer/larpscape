@@ -1,5 +1,6 @@
 from .auth_token_duration import AuthTokenDuration
 from .config_id import ConfigId
+from .data_type import DataType
 from .dimension import Dimension
 from .email_provider import EmailProvider
 from .gender import Gender

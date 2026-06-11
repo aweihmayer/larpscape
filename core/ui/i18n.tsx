@@ -1,11 +1,13 @@
 import { App } from "@/core";
 
 export function translate(
-    value: string | Record<string, string>,
+    value?: string | Record<string, string>,
     replacements: Record<string, string> | null = null
-) : string {
-    if (typeof value == 'object') {
-        return translate(value[App.lang], replacements);
+) : string | undefined {
+    if (value == undefined) {
+        return null
+    } else if (typeof value == 'object') {
+        return translate(value[App.instance!.state.lang], replacements);
     } else if (replacements == null) {
         return value;
     } else {

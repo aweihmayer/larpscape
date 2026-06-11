@@ -7,13 +7,9 @@ FORMATS = [
 
 def parse(v: str | None) -> date | None:
     if v == None or v.strip() == '': return None
-
     for f in FORMATS:
-        try:
-            return datetime.strptime(v, f).date()
-        except:
-            pass
-
+        try: return datetime.strptime(v, f).date()
+        except: pass
     raise Exception('Invalid format')
 
 def to_string(v: date | None) -> str | None:

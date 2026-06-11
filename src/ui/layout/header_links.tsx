@@ -30,42 +30,42 @@ export const NAV_LINKS = [
         Routes.app.home,
         {},
         I18N.menu.home,
-        () => <House />,
+        () => <House className="small" />,
         () => true
     ),
     new HeaderLinkData(
         Routes.app.game.list,
         {},
         I18N.menu.game,
-        () => <BookOpenText />,
+        () => <BookOpenText className="small" />,
         () => true
     ),
     new HeaderLinkData(
         Routes.app.event.list,
         {},
         I18N.menu.events,
-        () => <Calendar />,
+        () => <Calendar className="small" />,
         () => true
     ),
     new HeaderLinkData(
         Routes.app.product.list,
         {},
         I18N.menu.products,
-        () => <ShoppingCart />,
+        () => <ShoppingCart className="small" />,
         () => true
     ),
     new HeaderLinkData(
         Routes.app.user.list,
         {},
         I18N.menu.users,
-        () => <User />,
+        () => <User className="small" />,
         () => true
     ),
     new HeaderLinkData(
         Routes.app.config.list,
         {},
         I18N.menu.configs,
-        () => <Settings />,
+        () => <Settings className="small" />,
         () => AuthService.user.hasPermissions(Role.ADMIN)
     )
 ];
@@ -75,21 +75,21 @@ export const USER_LINKS = [
         Routes.app.self.user,
         {},
         I18N.menu.self.account,
-        () => <UserPen />,
+        () => <UserPen className="small" />,
         () => true
     ),
     new HeaderLinkData(
         Routes.app.self.events,
         {},
         I18N.menu.self.events,
-        () => <Calendar />,
+        () => <Calendar className="small" />,
         () => true
     ),
     new HeaderLinkData(
         Routes.app.self.purchases,
         {},
         I18N.menu.self.purchases,
-        () => <DollarSign />,
+        () => <DollarSign className="small" />,
         () => true
     )
 ]

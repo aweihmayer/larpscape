@@ -1,40 +1,36 @@
 import { Component, MouseEvent, ReactNode } from "react";
-import { App, Route } from "@/core";
+import { App, Loadable, Loader, Route } from "@/core";
 
-interface Props {
+interface Props extends Loadable {
     route: Route
     params?: object
-    children?: ReactNode | null
-    onClick: ((ev: MouseEvent) => void) | null
-    className: string
-};
+    children?: ReactNode
+    className?: string
+    onClick?: ((ev: MouseEvent) => void)
+}
 
 export class Link extends Component<Props, {}> {
-    static defaultProps = {
-        params: {},
-        children: null,
-        onClick: null,
-        className: ''
-    };
-
     constructor(props: Props) {
-        super(props);
+        super(props)
     }
 
     render() {
-        let href = this.props.route ? this.props.route.getRelativeUrl(this.props.params) : '';
+        let href = this.props.route.getRelativeUrl(this.props.params)
         return <a
             onClick={ev => this.handleClick(ev)}
             className={this.props.className}
-            href={href}>
-            {this.props.children}
-        </a>;
+            href={href}
+        >
+            <span>
+                {this.props.loading ? <Loader /> : this.props.children}
+            </span>
+        </a>
     }
 
     handleClick(ev: MouseEvent) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (this.props.onClick) this.props.onClick(ev);
-        App.goTo(this.props.route, this.props.params);
+        ev.preventDefault()
+        ev.stopPropagation()
+        if (this.props.onClick) this.props.onClick(ev)
+        App.goTo(this.props.route, this.props.params)
     }
 }

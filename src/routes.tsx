@@ -51,7 +51,9 @@ export const Routes = {
         },
         config: {
             list: api('/api/configs'),
-            read: api('/api/configs/{id}')
+            read: api('/api/configs/{id}'),
+            update: api('/api/configs/{id}', 'PATCH'),
+            reset: api('/api/configs/{id}/reset', 'PATCH')
         },
         user: {
             create: api('/api/users', 'POST')

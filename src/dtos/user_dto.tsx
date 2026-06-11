@@ -19,6 +19,10 @@ export class UserDto {
     hasPermissions(role: Constants.Role) : boolean {
         return !!this.role && this.role >= role
 	}
+
+	isGuest() : boolean {
+		return this.role == Constants.Role.GUEST
+	}
     
 	static fromJson(data: any) : UserDto {
 		const dto = new UserDto()
