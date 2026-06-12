@@ -1,15 +1,21 @@
-# ❓ What are you looking to know?
+# 🚀Using the app
+- Try out a demo.
+- Hosting the app yourself.
+- Host the app for me.
 
-## I want to learn about Larpscape's features
+# ✨Features
+- Editable configurations.
+- Files.
+- Users & their roles.
+- Characters.
+- Game objects.
+- Products.
+- Events.
 
-## I want to try out Larpscape on my computer
+# 💻Technical information
+The app was developed from scratch with as few dependencies as possible. AI is used exclusively for small technical questions and never has an agent produced any fully fledged feature. The code relies on basic fundamental frameworks to have a functioning environment, but each component of the app was made by me. The reason why I prefer this approach is because I want to keep the app simple and lightweight which allows total control for future improvements.
 
-## I want to use Larpscape on a real website
+- Passwords & authentication.
+- Database.
 
-## I want to learn technical details about how the code work
 
-1. [Tech stack.](docs/dev/tech_stack.md)
-- Download & install [Python](https://www.python.org/downloads/)
-- Download & install [Node.js](https://nodejs.org/en/download)
-- Download & install [Visual Studio Code](https://code.visualstudio.com/)
-- Download & install Github Desktop

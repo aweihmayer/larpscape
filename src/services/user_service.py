@@ -36,8 +36,7 @@ class UserService(BaseService):
         if self.fetch(model.username) or self.fetch(model.email):
             raise ConflictException()
         
-        # TODO check min age
-
+        # TODO check min      
         # TODO make sure role assignment is safe
         if self.user.role == Role.GUEST or model.role == None:
             model.role = Role.MEMBER
